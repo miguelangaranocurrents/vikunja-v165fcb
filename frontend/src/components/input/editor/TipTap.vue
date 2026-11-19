@@ -152,7 +152,7 @@
 					{{ $t('misc.save') }}
 				</BaseButton>
 			</li>
-			<li v-if="!isEditing">
+			<li v-if="!isEditing && isEditEnabled">
 				<BaseButton
 					class="done-edit"
 					@click="() => setEdit()"
@@ -199,6 +199,7 @@ import {BubbleMenu} from '@tiptap/vue-3/menus'
 import Mention from '@tiptap/extension-mention'
 
 import {taskLinkCurrentProjectIdKey} from './taskLinkContext'
+import {serializeSliceAsText} from './clipboardText'
 import {createEditorExtensions} from './editorExtensions'
 import mentionSuggestionSetup from './mention/mentionSuggestion'
 import MentionUser from './mention/MentionUser.vue'
@@ -350,6 +351,7 @@ const editor = useEditor({
 	extensions: extensions,
 	onUpdate: bubbleNow,
 	editorProps: {
+		clipboardTextSerializer: serializeSliceAsText,
 		attributes: {
 			'aria-label': props.placeholder || t('input.editor.label'),
 		},
